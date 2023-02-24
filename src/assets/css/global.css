@@ -82,6 +82,7 @@ video {
   font: inherit;
   vertical-align: baseline;
   box-sizing: border-box;
+  font-size: 14px;
 }
 article,
 aside,
@@ -173,4 +174,12 @@ button {
 
 .badge {
   width: 90px !important;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.swal2-container {
+  z-index: 99999999999999;
 }

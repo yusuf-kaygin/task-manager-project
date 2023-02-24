@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
-import Filter from "./filter";
-import List from "./list";
+import Filter from "./Filter";
+import List from "./List";
 
 export default function index() {
   return (

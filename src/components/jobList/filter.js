@@ -1,21 +1,47 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Select from "react-select";
+import { JobsContext } from "../../context/JobsContext";
 
-export default function filter() {
+export default function Filter() {
+  const { setFilterData } = useContext(JobsContext);
+
+  const [searchQuery, setSearchQuery] = useState(() => new String());
+  const [option, setOption] = useState(() => new String(""));
+
+  // TODO burda filtre her degistiginde degilde 50ms boyunca degisiklik olmazsa contexteki fonksiyonu tetiklemesini sagladik
+
+  useEffect(() => {
+    const timeOutValue = 50;
+    let timeOut = setTimeout(
+      () => setFilterData({ searchQuery, option }),
+      timeOutValue
+    );
+
+    return () => clearTimeout(timeOut); // TODO eger effect bitmeden tekrar tetiklenirse eski islemi siler
+  }, [searchQuery, option]);
+
+  //  -------------------------------------------------------------------
+
   return (
     <div className="filter py-2">
-      <div className="col-8 col-xl-7    ">
-        <input type="search" className="form-control" placeholder="Search" />
+      <div className="col-8 col-xl-7">
+        <input
+          type="search"
+          className="form-control"
+          placeholder="Search"
+          onChange={({ target }) => setSearchQuery(target.value)}
+        />
       </div>
 
       <div className="col-4 col-xl-5">
         <Select
-          // value={selectedOption}
-          // onChange={this.handleChange}
+          placeholder="Priority (all)"
+          onChange={(data) => setOption(data.value)}
           options={[
-            { value: "chocolate", label: "Chocolate" },
-            { value: "strawberry", label: "Strawberry" },
-            { value: "vanilla", label: "Vanilla" },
+            { value: "", label: "All" },
+            { value: "Urgent", label: "Urgent" },
+            { value: "Regular", label: "Regular" },
+            { value: "Trivial", label: "Trivial" },
           ]}
         />
       </div>
